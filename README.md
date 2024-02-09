@@ -1,7 +1,6 @@
-
 # oas-discovery-stubs
 
-This is a placeholder README.md for a new repository
+Stubs for HIP's OAS Discovery service.
 
 ### License
 

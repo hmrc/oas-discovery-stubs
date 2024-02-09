@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.oasdiscoverystubs.config
+package uk.gov.hmrc.oasdiscoverystubs.models
 
-import com.google.inject.AbstractModule
+import play.api.libs.json.{Format, Json}
 
-class Module extends AbstractModule {
+import java.time.Instant
 
-  override def configure(): Unit = {
+case class ApiDeployment(id: String, deploymentTimestamp: Instant)
 
-    bind(classOf[AppConfig]).asEagerSingleton()
-  }
+object ApiDeployment {
+
+  implicit val formatApiDeployment: Format[ApiDeployment] = Json.format[ApiDeployment]
+
 }

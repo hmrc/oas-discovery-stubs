@@ -23,11 +23,11 @@ import uk.gov.hmrc.oasdiscoverystubs.data.{ApiDeploymentData, OasDocumentData}
 import uk.gov.hmrc.oasdiscoverystubs.models.ApiDeployment
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import java.time.Instant
+import java.time.{Clock, Instant}
 import scala.collection.concurrent.TrieMap
 
 @Singleton
-class OasDiscoveryController @Inject()(cc: ControllerComponents)
+class OasDiscoveryController @Inject()(cc: ControllerComponents, clock: Clock)
   extends BackendController(cc)
   with ApiDeploymentData
   with OasDocumentData {
@@ -50,19 +50,19 @@ class OasDiscoveryController @Inject()(cc: ControllerComponents)
   }
 
   def allDeployments(): Action[AnyContent] = Action {
-    Ok(Json.toJson(apiDeployments.values))
+    Ok(Json.toJson(apiDeployments.values.toSeq.sorted))
   }
 
   def oas(id: String): Action[AnyContent] = Action {
     oasDocuments
       .get(id)
-      .map(Ok(_).withHeaders(CONTENT_TYPE -> "application/yaml"))
+      .map(Ok(_).as("application/yaml"))
       .getOrElse(NotFound)
   }
 
   def deployNow(id: String): Action[AnyContent] = Action {
     apiDeployments
-      .replace(id, ApiDeployment(id, Instant.now()))
+      .replace(id, ApiDeployment(id, Instant.now(clock)))
       .map(_ => NoContent)
       .getOrElse(NotFound)
   }

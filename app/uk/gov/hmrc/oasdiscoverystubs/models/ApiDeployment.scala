@@ -25,5 +25,6 @@ case class ApiDeployment(id: String, deploymentTimestamp: Instant)
 object ApiDeployment {
 
   implicit val formatApiDeployment: Format[ApiDeployment] = Json.format[ApiDeployment]
+  implicit val orderingApiDeployment: Ordering[ApiDeployment] = Ordering.by(_.id)
 
 }

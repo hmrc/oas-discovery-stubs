@@ -23,23 +23,29 @@ import java.time.temporal.ChronoUnit
 
 trait ApiDeploymentData {
 
-  def allApiDeployments(): Seq[ApiDeployment] = Seq(emsIdentity(), emsKeyingService(), emsAddressWeightingService())
+  import ApiDeploymentData._
 
-  private def emsIdentity(): ApiDeployment = {
+  def allApiDeployments(): Seq[ApiDeployment] = Seq(emsIdentity, emsKeyingService, emsAddressWeightingService)
+
+}
+
+object ApiDeploymentData {
+
+  val emsIdentity: ApiDeployment = {
     ApiDeployment(
       id = "ems-identity",
       deploymentTimestamp = Instant.now().minus(10, ChronoUnit.DAYS)
     )
   }
 
-  private def emsKeyingService(): ApiDeployment = {
+  val emsKeyingService: ApiDeployment = {
     ApiDeployment(
       id = "ems-keying-service",
       deploymentTimestamp = Instant.now().minus(20, ChronoUnit.DAYS)
     )
   }
 
-  private def emsAddressWeightingService(): ApiDeployment = {
+  val emsAddressWeightingService: ApiDeployment = {
     ApiDeployment(
       id = "ems-address-weighting-service",
       deploymentTimestamp = Instant.now().minus(30, ChronoUnit.DAYS)

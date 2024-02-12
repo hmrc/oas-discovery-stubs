@@ -20,9 +20,15 @@ import uk.gov.hmrc.oasdiscoverystubs.models.OasDocument
 
 trait OasDocumentData {
 
-  def allOasDocuments(): Seq[OasDocument] = Seq(emsIdentity(), emsKeyingService(), emsAddressWeightingService())
+  import OasDocumentData._
 
-  private def emsIdentity(): OasDocument = {
+  def allOasDocuments(): Seq[OasDocument] = Seq(emsIdentity, emsKeyingService, emsAddressWeightingService)
+
+}
+
+object OasDocumentData {
+
+  val emsIdentity: OasDocument = {
     OasDocument(
       id = "ems-identity",
       content =
@@ -423,7 +429,7 @@ trait OasDocumentData {
     )
   }
 
-  private def emsKeyingService(): OasDocument = {
+  val emsKeyingService: OasDocument = {
     OasDocument(
       id = "ems-keying-service",
       content =
@@ -1061,7 +1067,7 @@ trait OasDocumentData {
     )
   }
 
-  private def emsAddressWeightingService(): OasDocument = {
+  val emsAddressWeightingService: OasDocument = {
     OasDocument(
       id = "ems-address-weighting-service",
       content =

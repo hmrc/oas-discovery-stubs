@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.oasdiscoverystubs.config
+package uk.gov.hmrc.oasdiscoverystubs.models
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.libs.json.{Format, Json}
 
-@Singleton
-class AppConfig @Inject()(config: Configuration) {
+import java.time.Instant
 
-  val appName: String = config.get[String]("appName")
+case class ApiDeployment(id: String, deploymentTimestamp: Instant)
+
+object ApiDeployment {
+
+  implicit val formatApiDeployment: Format[ApiDeployment] = Json.format[ApiDeployment]
+  implicit val orderingApiDeployment: Ordering[ApiDeployment] = Ordering.by(_.id)
+
 }

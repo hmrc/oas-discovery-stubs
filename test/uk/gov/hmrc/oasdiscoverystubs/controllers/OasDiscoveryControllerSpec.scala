@@ -48,6 +48,32 @@ class OasDiscoveryControllerSpec extends AnyFreeSpec with Matchers with ApiDeplo
     }
   }
 
+  "deployment" - {
+    "must return all API deployment by id" in {
+      val application = buildApplication()
+      val id = "ems-identity"
+
+      running(application) {
+        val request = FakeRequest(routes.OasDiscoveryController.deployment(id))
+        val result = route(application, request).get
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(allApiDeployments().find(_.id == id).get)
+      }
+    }
+    "must return Not Found if there is no deployments with the provided id" in {
+      val application = buildApplication()
+      val id = "not-found-id"
+
+      running(application) {
+        val request = FakeRequest(routes.OasDiscoveryController.deployment(id))
+        val result = route(application, request).get
+
+        status(result) mustBe NOT_FOUND
+      }
+    }
+  }
+
   "oas" - {
     "must return the OAS document for an API when it exists" in {
       val application = buildApplication()

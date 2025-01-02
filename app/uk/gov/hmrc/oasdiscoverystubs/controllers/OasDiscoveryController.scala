@@ -53,6 +53,14 @@ class OasDiscoveryController @Inject()(cc: ControllerComponents, clock: Clock)
     Ok(Json.toJson(apiDeployments.values.toSeq.sorted))
   }
 
+  def deployment(id: String): Action[AnyContent] = Action {
+    apiDeployments.values.toSeq.find(
+      _.id == id
+    ).map(apiDeployment =>
+      Ok(Json.toJson(apiDeployment))
+    ).getOrElse(NotFound)
+  }
+
   def oas(id: String): Action[AnyContent] = Action {
     oasDocuments
       .get(id)

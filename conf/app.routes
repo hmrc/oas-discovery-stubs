@@ -1,6 +1,7 @@
 # microservice specific routes
 
 GET /v1/oas-deployments                     uk.gov.hmrc.oasdiscoverystubs.controllers.OasDiscoveryController.allDeployments()
+GET /v1/oas-deployments/:id                 uk.gov.hmrc.oasdiscoverystubs.controllers.OasDiscoveryController.deployment(id: String)
 GET /v1/oas-deployments/:id/oas             uk.gov.hmrc.oasdiscoverystubs.controllers.OasDiscoveryController.oas(id: String)
 
 PUT /deploy-now/:id                         uk.gov.hmrc.oasdiscoverystubs.controllers.OasDiscoveryController.deployNow(id: String)
